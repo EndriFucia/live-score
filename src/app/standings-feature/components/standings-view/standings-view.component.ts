@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SoccerDataService } from '../../services/soccer-data.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subscription, map } from 'rxjs';
+import { EMPTY, Observable, Subscription, catchError, map } from 'rxjs';
 import { LeaugeStandings, ResponseLeauge } from 'src/app/shared/models/standings';
 import { standingsConstArray } from 'src/app/shared/standings.data';
 
@@ -14,7 +14,6 @@ export class StandingsViewComponent implements OnInit, OnDestroy {
     leaugeStandings$!: Observable<LeaugeStandings>;
     currentLeaugeId!: number;
     currentTeamId!: number;
-    //standingsArray = standingsConstArray;
     standingsSubscription!: Subscription;
     fixtureNavigationClicked = false;
 
@@ -25,13 +24,15 @@ export class StandingsViewComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
-        //this.standingsArray = standingsConstArray;
-
         this.standingsSubscription = this.activatedRoute.params.subscribe((param) => {
             this.currentLeaugeId = param['leagueId'];
-            this.leaugeStandings$ = this.soccerService
-                .getStandings(param['leagueId'])
-                .pipe(map((leaugeResponse: ResponseLeauge) => leaugeResponse.league));
+            this.leaugeStandings$ = this.soccerService.getStandings(param['leagueId']).pipe(
+                map((leaugeResponse: ResponseLeauge) => leaugeResponse.league),
+                catchError((err) => {
+                    console.error(err);
+                    return EMPTY;
+                })
+            );
         });
     }
 

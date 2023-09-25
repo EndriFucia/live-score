@@ -30,6 +30,5 @@ export class NavComponent implements OnDestroy {
                     console.log('Could not fetch league!');
                 }
             });
-        //this.router.navigate(['/standings/' + this.countryLeauge[country]]);
     }
 }

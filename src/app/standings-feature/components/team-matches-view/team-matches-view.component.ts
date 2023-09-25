@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SoccerDataService } from '../../services/soccer-data.service';
 import { FixutreDetails } from 'src/app/shared/models/fixtures';
-import { Observable, map } from 'rxjs';
+import { EMPTY, Observable, catchError, map } from 'rxjs';
 
 @Component({
     selector: 'ls-team-matches-view',
@@ -26,18 +26,32 @@ export class TeamMatchesViewComponent implements OnInit {
                 leagueId: params['leagueId'],
                 teamId: params['teamId'],
             };
-            this.getFixtures();
+            if (this.fixtureDetails.leagueId !== undefined && this.fixtureDetails.teamId !== undefined) {
+                this.getFixtures();
+            } else {
+                console.log('Could not fetch fixtures data because route parameters were incorrect!');
+            }
         });
     }
 
     getFixtures() {
         this.fixtures$ = this.soccerService
             .getTenLastFixtures(this.fixtureDetails.leagueId, this.fixtureDetails.teamId)
-            .pipe(map((fixtureResponse: FixutreDetails[]) => fixtureResponse));
+            .pipe(
+                map((fixtureResponse: FixutreDetails[]) => fixtureResponse),
+                catchError((err) => {
+                    console.error(err);
+                    return EMPTY;
+                })
+            );
     }
 
     buttonBackClick() {
-        this.backClicked.next(true);
-        this.router.navigate(['/standings/' + this.fixtureDetails.leagueId]);
+        if (this.fixtureDetails.leagueId !== undefined && this.fixtureDetails.teamId !== undefined) {
+            this.backClicked.next(true);
+            this.router.navigate(['/standings/' + this.fixtureDetails.leagueId]);
+        } else {
+            console.log('Could not navigateback because route parameters were incorrect!');
+        }
     }
 }
