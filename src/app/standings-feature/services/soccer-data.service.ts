@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 import { LeaugeDetails } from '../../shared/models/leauges';
-import { BehaviorSubject, EMPTY, Observable, catchError, combineLatest, map, shareReplay, tap } from 'rxjs';
+import { EMPTY, Observable, catchError, map, shareReplay, tap } from 'rxjs';
 import { ResponseLeauge } from '../../shared/models/standings';
 import { ResponseBaseModel } from '../../shared/models/base';
 import { FixutreDetails } from '../../shared/models/fixtures';
