@@ -1,0 +1,12 @@
+<div class="fixtures-details-container" *ngIf="fixtures$ | async as fixtures">
+    <div class="fixutre-container" *ngFor="let fixture of fixtures">
+        <p class="img"><img [src]="fixture.teams.home.logo" alt="teamLogo" /></p>
+        <p>{{ fixture.teams.home.name }}</p>
+        <p>{{ fixture.goals.home }}</p>
+        <p>-</p>
+        <p>{{ fixture.goals.away }}</p>
+        <p>{{ fixture.teams.away.name }}</p>
+        <p class="img"><img [src]="fixture.teams.away.logo" alt="teamLogo" /></p>
+    </div>
+</div>
+<button (click)="buttonBackClick()">Back</button>

@@ -1,8 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subscription, map, switchMap, tap } from 'rxjs';
-import { SoccerDataService } from 'src/app/standings-feature/soccer-data.service';
-import { ResponseBaseModel } from '../models/base';
+import { Subscription } from 'rxjs';
+import { SoccerDataService } from 'src/app/standings-feature/services/soccer-data.service';
 import { LeaugeDetails } from '../models/leauges';
 
 @Component({
@@ -22,11 +21,15 @@ export class NavComponent implements OnDestroy {
     }
 
     navigateTo(country: string) {
-        // this.leagueIdSubscription = this.soccerService
-        //     .getLeaugeId(country)
-        //     .subscribe((leaugeDetails: ResponseBaseModel<LeaugeDetails>) => {
-        //         this.router.navigate(['/standings/' + leaugeDetails.response[0].league.id]);
-        //     });
-        this.router.navigate(['/standings/' + country]);
+        this.leagueIdSubscription = this.soccerService
+            .getLeaugeId(country)
+            .subscribe((leaugeDetails: LeaugeDetails) => {
+                if (leaugeDetails !== undefined) {
+                    this.router.navigate(['/standings/' + leaugeDetails.league.id]);
+                } else {
+                    console.log('Could not fetch league!');
+                }
+            });
+        //this.router.navigate(['/standings/' + this.countryLeauge[country]]);
     }
 }

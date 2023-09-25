@@ -11,7 +11,7 @@ export interface Country {
     flag: string;
 }
 
-export interface Fixture {
+export interface FixtureBool {
     events: boolean;
     lineups: boolean;
     statistics_fixtures: boolean;
@@ -19,7 +19,7 @@ export interface Fixture {
 }
 
 export interface Coverage {
-    fixtures: Fixture;
+    fixtures: FixtureBool;
     standings: boolean;
     players: boolean;
     top_scorers: boolean;

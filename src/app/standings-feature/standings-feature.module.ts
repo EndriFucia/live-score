@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StandingsViewComponent } from './standings-view/standings-view.component';
+import { StandingsViewComponent } from './components/standings-view/standings-view.component';
 import { StandingsFeatureRoutingModule } from './standaing-features-routing.module';
-import { SoccerDataService } from './soccer-data.service';
-import { StandingComponent } from './standing/standing.component';
+import { SoccerDataService } from './services/soccer-data.service';
+import { StandingComponent } from './components/standing/standing.component';
+import { TeamMatchesViewComponent } from './components/team-matches-view/team-matches-view.component';
 
 @NgModule({
-    declarations: [StandingsViewComponent, StandingComponent],
+    declarations: [StandingsViewComponent, StandingComponent, TeamMatchesViewComponent],
     imports: [CommonModule, StandingsFeatureRoutingModule],
     exports: [StandingsFeatureRoutingModule],
     providers: [SoccerDataService],

@@ -1,4 +1,4 @@
 export const environment = {
     apiBaseUrl: 'https://v3.football.api-sports.io',
-    key: '6133b240abf4b6dabc3dea9737fb8214',
+    key: '9c5d47ea7f9cc6c1a1b0db4d5c6f9314',
 };
