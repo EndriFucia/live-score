@@ -1,0 +1,5 @@
+<div class="nav-container">
+    <button *ngFor="let country of countries" id="{{ country | lowercase }}Select" (click)="navigateTo(country)">
+        {{ country }}
+    </button>
+</div>
